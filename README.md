@@ -1,16 +1,20 @@
 # dd-docs-manage
 
-你在使用ai coding时是否也有过这样的经历：文档落库是解决Vibe Coding长期上下文管理、需求一致性和项目可维护性问题的核心手段之一，在前期需要大量需求文档和调研文档来进行项目总体设计并约束Agent工作路径；项目的技术选型、架构设计、API接口契约、编码约定需要撰写文档落库；长期开发规划需要plan文档维护；单个task完成后需要开启新对话时又需要交接文档维护当下开发进度；开发过程中的技术决策、错误排查记录、日志都需要文档留下依据......
+你在使用AI coding时是否也有过这样的经历：文档落库是解决Vibe Coding长期上下文管理、需求一致性和项目可维护性问题的核心手段之一，项目在前期需要大量需求文档和调研文档来进行总体设计并约束Agent工作路径；项目的技术选型、架构设计、API接口契约、编码约定需要撰写文档落库；长期开发规划需要plan文档维护；单个task完成后需要开启新对话时又需要交接文档维护当下开发进度；开发过程中的技术决策、错误排查记录、日志都需要文档留下依据......
 
-这些内容陆续写进文件，然后就会出现以下问题：
-1.文档膨胀。Agent总是在已有文档下面追加撰写，经常为小修改生成大量说明。
-2.上下文浪费。每次开启新对话如果都读取全量文档会导致上下文窗口浪费和可能的上下文污染，且在反复的上下文压缩后容易产生偏移。
+这些内容陆续写进文档文件，然后就会出现以下问题：
+
+1.文档膨胀。Agent总是在已有文档下面追加撰写，经常为小修改生成大量说明，长期下来文档臭不可闻。
+
+2.上下文浪费。每次开启新对话如果都读取全量文档会导致上下文窗口浪费和可能的上下文污染，且在反复上下文压缩后容易产生偏移。
+
 3.按需读取易漏。只让AI读取当前任务相关的文档AI有时候判断不准，容易读偏读漏。
+
 4.文档过时。先前在对话过程中做过项目重要决策，结果开个新对话就忘记，落库到文档又容易与先前的决策或设计产生先后混乱以及冲突，结果错误文档被Agent当成事实反复使用。
 
-如果你也曾被以上问题困扰，又懒得去查找相关问题的解决方法和最佳实践，那么本技能可能会适合你：dd-docs-manage是一个项目文档管理技能，它的核心是给你项目的文档库做分层索引，薄入口，按需读取索引寻址。
+如果你也曾被以上问题困扰，又懒得去查找相关问题的解决方法和最佳实践，那么为解决这些问题而诞生的本技能可能会适合你：dd-docs-manage是一个项目文档管理技能，它的核心是给你项目的文档库做分层索引，薄入口，按需读取索引寻址。
 
-它会从项目已有资料开始，筛选哪些内容值得进入日常开发读取链，再根据任务复杂度安排文档粒度：简单任务保留必要说明，复杂任务按职责分层组织。用薄入口和任务索引告诉 Agent“这次该去哪里读”，再通过标题、稳定编号和章节引用定位内容，让引用替代反复复制。遇到明确依赖或冲突时，再补读相关部分。
+它会从项目已有资料开始，筛选哪些内容值得进入日常开发读取链，再根据任务复杂度安排文档粒度：简单任务保留必要说明，复杂任务按职责分层组织。用薄入口和任务索引告诉 Agent“这次该去哪里读”，再通过标题、稳定编号和章节引用定位内容，让引用替代反复复制。遇到明确依赖或冲突时再补读相关部分。
 
 对于散落在各处的规则，它会确定唯一的权威来源，约定变更后应该更新哪里，并在修改代码时同步核对相关文档。当前操作与历史证据分开维护，原始材料继续保留；必要的命令、测试结果和验证依据也能找到出处，避免把旧记录当成今天必须重复执行的步骤。
 
@@ -37,7 +41,7 @@
 
 把整个 `dd-docs-manage` 文件夹放到目标工具支持的技能目录（例如C:\\Users<用户名>.agents\\skills\\dd-docs-manage），保留 `SKILL.md` 与 `references` 的相对结构。
 
-或者直接跟ai说帮我下载dd-docs-manage这个技能，地址在https://github.com/ddd54666/dd-docs-manage。
+或者直接跟ai说帮我下载dd-docs-manage这个技能，地址在https://github.com/ddd54666/dd-docs-manage
 
 本技能只有文档，无脚本或其他技能依赖。使用的agent工具需要具备读取、修改项目文件的能力与权限。
 
@@ -46,30 +50,25 @@
 整理文档：
 
 ```text
-/dd-docs-manage 检查当前项目的长文档入口、重复规则和读取路径。
-整理本次授权的部分，保留原始材料、历史证据和用户已有改动。
+/dd-docs-manage 检查当前项目的长文档入口、重复规则和读取路径。整理本次授权的部分，保留原始材料、历史证据和用户已有改动。
 ```
 
 新项目规范：
 
 ```text
-/dd-docs-manage 为当前项目编写 AGENTS.md 和任务读取索引。
-先复用现有文件与状态来源，文档数量和目录按项目需要确定。
+/dd-docs-manage 为当前项目编写 AGENTS.md 和任务读取索引。先复用现有文件与状态来源，文档数量和目录按项目需要确定。
 ```
 
 规划下一轮：
 
 ```text
-/dd-docs-manage 按当前进度规划下一轮工作。
-沿用已有任务编号，说明依赖和完成条件，在回复中写明建议授权范围。
-这次只做规划。
+/dd-docs-manage 按当前进度规划下一轮工作。沿用已有任务编号，说明依赖和完成条件，在回复中写明建议授权范围，这次只做规划。
 ```
 
 换对话：
 
 ```text
-/dd-docs-manage 我准备换对话。先更新当前状态和重要决定，再保存交接。
-回复中给出文件链接、下一轮建议授权范围和完整可复制的开场提示。
+/dd-docs-manage 我准备换对话。先更新当前状态和重要决定，再保存交接。在回复中给出文件链接、下一轮建议授权范围和完整可复制的开场提示。
 ```
 
 整理结果写回相关文档；规划结果直接给用户判断；交接同时提供文件与回复中的提示词。只有项目要求且已有授权时才创建commit，技能不会自动commit或者push。
@@ -89,7 +88,7 @@ dd-docs-manage/
 
 ## 个人实践
 
-这套方法来自我在个人＋单仓库条件下的使用。下面是当时的做法和实测感受，只供参考。这些不进入技能的执行默认值。
+这套方法来自我在个人＋单仓库条件下的使用。下面是做法和实测感受，只供参考。这些不进入技能的执行默认值。
 
 |项目|我自己的做法或观察|使用时可以个性化|
 |-|-|-|
@@ -97,27 +96,27 @@ dd-docs-manage/
 |上下文提醒线|约70%时提醒较合适|需要可靠的上下文占用读数；提醒后由用户决定是否换对话|
 |普通讨论落盘|与ai协作进行需求分析时累计讨论5至6轮后统一更新相关文档|重大决定和明确要求记录的内容立即写回|
 |验证尺度|codex喜欢写雷霆大验证，我嘞个防御性编程啊|验证深度与次数由目标项目确定|
-|目录与命名|原项目采用固定目录、交接命名和时区|复用目标项目现有约定|
+|目录与命名|要求agent采用固定文档目录、设置交接文件命名规则|复用目标项目现有约定|
 
 R是我个人项目的最小task项编号。其他项目继续用自己的任务标识，不用为了使用技能重新编号。这些记录是个人习惯性的偏好，不是跨模型测评或通用工程标准。
 
-## 技能做法参考依据
+## 技能设计参考依据
 
-本技能参考OpenAI与Anthropic的公开实践，将渐进加载、单一事实源、ADR、docs-as-code、文档职责分工和工作状态维护等设计原则，组合成适合个人项目与AI协作的流程，把自己常用的工作流和文档管理方法蒸馏成了这一套SKILL。
+本技能参考OpenAI与Anthropic的公开实践，将渐进加载、单一事实源、ADR、docs-as-code、文档职责分工和工作状态维护等设计原则，组合成适合个人项目与AI协作的流程，结合我自己常用的工作流和文档管理方法蒸馏成了这一套SKILL。
 
 下面是技能设计原则的官方公开实践参考依据
 
-|设计原则|参考链接|对应实践|
-|-|-|-|
-|渐进加载、按需读取|(https://www.anthropic.com/research/effective-context-engineering-for-ai-agents)|通过文件路径等轻量标识保存线索，任务需要时再加载内容；渐进披露和即时检索。|
-|单一事实源|(https://docs.gitlab.com/development/documentation/styleguide/#documentation-is-the-single-source-of-truth-ssot)|持续维护可信文档，已有答案优先分享文档链接|
-|ADR：架构决策记录|(https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/adr-process.html)|记录决定、背景与后果，保留为什么这样选择。已接受的ADR保持不变，后续决定通过新的ADR替代旧决定|
-|docs-as-code|(https://www.writethedocs.org/guide/docs-as-code/)|文档使用版本控制、纯文本格式、问题追踪和审查等开发工具与流程|
-|文档职责分工|(https://diataxis.fr/)|按需要区分教程、操作指南、技术参考和解释，帮助确定一份文档应该承担什么职责。|
-|工作状态维护、跨对话续作|(https://www.anthropic.com/research/effective-harnesses-for-long-running-agents)|通过进度记录、功能清单及版本历史，让新会话快速了解已经完成、尚未完成和接下来要做的工作|
-|修改代码时同步维护文档|(https://docs.gitlab.com/development/documentation/workflow/#including-documentation-with-code)|介绍将相关文档与代码放在同一个合并请求中的收益，以及如何安排同步审查|
-|按内容用途组织章节|(https://docs.gitlab.com/development/documentation/topic\_types/)|区分概念、任务、参考和故障排查，文档职责分工的厂商实践|
-|区分会话状态、长期经验与权威产物|(https://developers.openai.com/cookbook/examples/agents\_sdk/building\_reliable\_agents\_memory\_compaction)|将压缩用于延续当前工作，将记忆用于复用经验，同时保留供人核对的权威产物|
+|设计原则|参考链接与对应实践|
+|-|-|
+|渐进加载、按需读取|(https://www.anthropic.com/research/effective-context-engineering-for-ai-agents) 通过文件路径等轻量标识保存线索，任务需要时再加载内容；渐进披露和即时检索。|
+|单一事实源|(https://docs.gitlab.com/development/documentation/styleguide/#documentation-is-the-single-source-of-truth-ssot) 持续维护可信文档，已有答案优先分享文档链接|
+|ADR：架构决策记录|(https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/adr-process.html) 记录决定、背景与后果，保留为什么这样选择。已接受的ADR保持不变，后续决定通过新的ADR替代旧决定|
+|docs-as-code|(https://www.writethedocs.org/guide/docs-as-code/) 文档使用版本控制、纯文本格式、问题追踪和审查等开发工具与流程|
+|文档职责分工|(https://diataxis.fr/) 按需要区分教程、操作指南、技术参考和解释，帮助确定一份文档应该承担什么职责。|
+|工作状态维护、跨对话续作|(https://www.anthropic.com/research/effective-harnesses-for-long-running-agents) 通过进度记录、功能清单及版本历史，让新会话快速了解已经完成、尚未完成和接下来要做的工作|
+|修改代码时同步维护文档|(https://docs.gitlab.com/development/documentation/workflow/#including-documentation-with-code) 介绍将相关文档与代码放在同一个合并请求中的收益，以及如何安排同步审查|
+|按内容用途组织章节|(https://docs.gitlab.com/development/documentation/topic_types/) 区分概念、任务、参考和故障排查，文档职责分工的厂商实践|
+|区分会话状态、长期经验与权威产物|(https://developers.openai.com/cookbook/examples/agents_sdk/building_reliable_agents_memory_compaction) 将压缩用于延续当前工作，将记忆用于复用经验，同时保留供人核对的权威产物|
 
 
 
